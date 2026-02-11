@@ -13,3 +13,4 @@ output:
 
 I am interested in exploring data related to elections in America
 
+install.packages("distill")
