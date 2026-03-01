@@ -116,7 +116,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["index_files/anchor-4.2.2/anchor.min.js","index_files/bowser-1.9.3/bowser.min.js","index_files/distill-2.2.21/template.v2.js","index_files/header-attrs-2.17/header-attrs.js","index_files/header-attrs-2.30/header-attrs.js","index_files/jquery-3.6.0/jquery-3.6.0.js","index_files/jquery-3.6.0/jquery-3.6.0.min.js","index_files/jquery-3.6.0/jquery-3.6.0.min.map","index_files/popper-2.6.0/popper.min.js","index_files/tippy-6.2.7/tippy-bundle.umd.min.js","index_files/tippy-6.2.7/tippy-light-border.css","index_files/tippy-6.2.7/tippy.css","index_files/tippy-6.2.7/tippy.umd.min.js","index_files/webcomponents-2.0.0/webcomponents.js"]}
+  {"type":"character","attributes":{},"value":["ATP W153 Codebook.xlsx","ATP W153 Methodology.pdf","ATP W153 Questionnaire.pdf","ATP W153 Readme.txt","ATP W153.csv","ATP W153.sav","index_files/anchor-4.2.2/anchor.min.js","index_files/bowser-1.9.3/bowser.min.js","index_files/distill-2.2.21/template.v2.js","index_files/header-attrs-2.17/header-attrs.js","index_files/header-attrs-2.30/header-attrs.js","index_files/jquery-3.6.0/jquery-3.6.0.js","index_files/jquery-3.6.0/jquery-3.6.0.min.js","index_files/jquery-3.6.0/jquery-3.6.0.min.map","index_files/popper-2.6.0/popper.min.js","index_files/tippy-6.2.7/tippy-bundle.umd.min.js","index_files/tippy-6.2.7/tippy-light-border.css","index_files/tippy-6.2.7/tippy.css","index_files/tippy-6.2.7/tippy.umd.min.js","index_files/webcomponents-2.0.0/webcomponents.js"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
   <!--/radix_placeholder_navigation_in_header-->
@@ -1545,8 +1545,31 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 
 <div class="d-article">
 <h2 id="project-thoughts">Project thoughts</h2>
-<p>I am interested in exploring data related to elections in America</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<p>My research question is how do age and education impact a person’s participation in election opinion polls? My hypothesis is that older and more educated people participate at a higher rate in election opinion polls than younger and less educated people. I hypothesize this because older and more educated people generally have more time to participate in these and may have more interest. Someone who is older and possibly retired with a higher education level will have more time and knowledge/interest to participate in an election opinion poll. However, a younger people with a lower education level might have less time to participate and less interest. My explanatory variables are age and education and these are measured by a person’s age and the highest level of education they have completed. The outcome variable is the rate of participation of different groups of people in election opinion polls. This can be measured by seeing what proportion of people who participate are above or below a certain age or a certain level of education. Something that would support my hypothesis would be seeing groups of people who are older and more educated participating more in these polls than people who are younger and less educated. However, if I see that younger people with less education are participating more than I will see that my hypothesis is false.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://tidyverse.tidyverse.org'>tidyverse</a></span><span class='op'>)</span></span>
+<span><span class='va'>data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://readr.tidyverse.org/reference/read_delim.html'>read_csv</a></span><span class='op'>(</span><span class='st'>"ATP W153.csv"</span><span class='op'>)</span></span>
+<span><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>data</span><span class='op'>)</span></span></code></pre>
+</div>
+<pre><code># A tibble: 6 × 188
+    QKEY INTERVIEW_START_W153 INTERVIEW_END_W153   DEVICE_TYPE_W153
+   &lt;dbl&gt; &lt;chr&gt;                &lt;chr&gt;                           &lt;dbl&gt;
+1 100314 27-Aug-2024 15:35:37 27-Aug-2024 15:49:18                1
+2 100363 28-Aug-2024 06:28:34 28-Aug-2024 06:38:10                1
+3 100637 28-Aug-2024 07:18:23 28-Aug-2024 07:28:24                3
+4 100803 27-Aug-2024 17:43:14 27-Aug-2024 17:52:18                3
+5 101437 27-Aug-2024 15:28:51 27-Aug-2024 15:45:06                3
+6 102198 29-Aug-2024 12:54:09 29-Aug-2024 13:02:22                3
+# ℹ 184 more variables: SVYMODE_W153 &lt;dbl&gt;, LANG_W153 &lt;dbl&gt;,
+#   FORM_W153 &lt;dbl&gt;, X_NONINTERNET_W153 &lt;dbl&gt;, PRZCMPGN_W153 &lt;dbl&gt;,
+#   MATTERS_W153 &lt;dbl&gt;, VOTEGEN24_W153 &lt;dbl&gt;,
+#   VOTEGEN24_LEAN_W153 &lt;dbl&gt;, VOTEGEN2_TRUMP_W153 &lt;dbl&gt;,
+#   VOTEGEN2_HARRIS_W153 &lt;dbl&gt;, VOTESTRONG_W153 &lt;dbl&gt;,
+#   DTFORAGNST_W153 &lt;dbl&gt;, KHFORAGNST_W153 &lt;dbl&gt;,
+#   SATISPRESCAND_W153 &lt;dbl&gt;, TRUMP_FEEL_PRD_W153 &lt;dbl&gt;, …</code></pre>
+</div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>
