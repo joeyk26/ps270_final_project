@@ -116,7 +116,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["ATP W153 Codebook.xlsx","ATP W153 Methodology.pdf","ATP W153 Questionnaire.pdf","ATP W153 Readme.txt","ATP W153.csv","ATP W153.sav","index_files/anchor-4.2.2/anchor.min.js","index_files/bowser-1.9.3/bowser.min.js","index_files/distill-2.2.21/template.v2.js","index_files/header-attrs-2.17/header-attrs.js","index_files/header-attrs-2.30/header-attrs.js","index_files/jquery-3.6.0/jquery-3.6.0.js","index_files/jquery-3.6.0/jquery-3.6.0.min.js","index_files/jquery-3.6.0/jquery-3.6.0.min.map","index_files/popper-2.6.0/popper.min.js","index_files/tippy-6.2.7/tippy-bundle.umd.min.js","index_files/tippy-6.2.7/tippy-light-border.css","index_files/tippy-6.2.7/tippy.css","index_files/tippy-6.2.7/tippy.umd.min.js","index_files/webcomponents-2.0.0/webcomponents.js"]}
+  {"type":"character","attributes":{},"value":["ATP W153 Codebook.xlsx","ATP W153 Methodology.pdf","ATP W153 Questionnaire.pdf","ATP W153 Readme.txt","ATP W153.csv","ATP W153.sav","index_files/anchor-4.2.2/anchor.min.js","index_files/bowser-1.9.3/bowser.min.js","index_files/distill-2.2.21/template.v2.js","index_files/figure-html5/unnamed-chunk-3-1.png","index_files/figure-html5/unnamed-chunk-3-2.png","index_files/header-attrs-2.17/header-attrs.js","index_files/header-attrs-2.30/header-attrs.js","index_files/jquery-3.6.0/jquery-3.6.0.js","index_files/jquery-3.6.0/jquery-3.6.0.min.js","index_files/jquery-3.6.0/jquery-3.6.0.min.map","index_files/popper-2.6.0/popper.min.js","index_files/tippy-6.2.7/tippy-bundle.umd.min.js","index_files/tippy-6.2.7/tippy-light-border.css","index_files/tippy-6.2.7/tippy.css","index_files/tippy-6.2.7/tippy.umd.min.js","index_files/webcomponents-2.0.0/webcomponents.js"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
   <!--/radix_placeholder_navigation_in_header-->
@@ -1545,10 +1545,12 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 
 <div class="d-article">
 <h2 id="project-thoughts">Project thoughts</h2>
-<p>My research question is how do age and education impact a person’s participation in election opinion polls? My hypothesis is that older and more educated people participate at a higher rate in election opinion polls than younger and less educated people. I hypothesize this because older and more educated people generally have more time to participate in these and may have more interest. Someone who is older and possibly retired with a higher education level will have more time and knowledge/interest to participate in an election opinion poll. However, a younger people with a lower education level might have less time to participate and less interest. My explanatory variables are age and education and these are measured by a person’s age and the highest level of education they have completed. The outcome variable is the rate of participation of different groups of people in election opinion polls. This can be measured by seeing what proportion of people who participate are above or below a certain age or a certain level of education. Something that would support my hypothesis would be seeing groups of people who are older and more educated participating more in these polls than people who are younger and less educated. However, if I see that younger people with less education are participating more than I will see that my hypothesis is false.</p>
+<p>My research question is how do age and education impact a person’s participation in election opinion polls? My hypothesis is that older and more educated people participate at a higher rate in election opinion polls than younger and less educated people. I hypothesize this because older and more educated people generally have more time to participate in these and may have more interest. Someone who is older and possibly retired with a higher education level will have more time and knowledge/interest to participate in an election opinion poll. However, a younger people with a lower education level might have less time to participate and less interest. My explanatory variables are age and education and these are measured by a person’s age and the highest level of education they have completed. The outcome variable is the rate of participation of different groups of people in election opinion polls. This can be measured by seeing what proportion of people who participate are above or below a certain age or a certain level of education. Something that would support my hypothesis would be seeing groups of people who are older and more educated participating more in these polls than people who are younger and less educated. However, if I see that younger people with less education are participating more than I will see that my hypothesis is false. The data I will be using is from the Pew Research Center.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r"><span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://tidyverse.tidyverse.org'>tidyverse</a></span><span class='op'>)</span></span>
+<span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://dplyr.tidyverse.org'>dplyr</a></span><span class='op'>)</span></span>
+<span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://ggplot2.tidyverse.org'>ggplot2</a></span><span class='op'>)</span></span>
 <span><span class='va'>data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://readr.tidyverse.org/reference/read_delim.html'>read_csv</a></span><span class='op'>(</span><span class='st'>"ATP W153.csv"</span><span class='op'>)</span></span>
 <span><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>data</span><span class='op'>)</span></span></code></pre>
 </div>
@@ -1568,6 +1570,152 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 #   VOTEGEN2_HARRIS_W153 &lt;dbl&gt;, VOTESTRONG_W153 &lt;dbl&gt;,
 #   DTFORAGNST_W153 &lt;dbl&gt;, KHFORAGNST_W153 &lt;dbl&gt;,
 #   SATISPRESCAND_W153 &lt;dbl&gt;, TRUMP_FEEL_PRD_W153 &lt;dbl&gt;, …</code></pre>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>data</span> <span class='op'>&lt;-</span> <span class='va'>data</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>education_level <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/case-and-replace-when.html'>case_when</a></span><span class='op'>(</span></span>
+<span>    <span class='va'>F_EDUCCAT2</span> <span class='op'>==</span> <span class='fl'>1</span> <span class='op'>~</span> <span class='st'>"Less than HS"</span>,</span>
+<span>    <span class='va'>F_EDUCCAT2</span> <span class='op'>==</span> <span class='fl'>2</span> <span class='op'>~</span> <span class='st'>"HS Grad"</span>,</span>
+<span>    <span class='va'>F_EDUCCAT2</span> <span class='op'>==</span> <span class='fl'>3</span> <span class='op'>~</span> <span class='st'>"Some College"</span>,</span>
+<span>    <span class='va'>F_EDUCCAT2</span> <span class='op'>==</span> <span class='fl'>4</span> <span class='op'>~</span> <span class='st'>"Assoc Degree"</span>,</span>
+<span>    <span class='va'>F_EDUCCAT2</span> <span class='op'>==</span> <span class='fl'>5</span> <span class='op'>~</span> <span class='st'>"College Grad"</span>,</span>
+<span>    <span class='va'>F_EDUCCAT2</span> <span class='op'>==</span> <span class='fl'>6</span> <span class='op'>~</span> <span class='st'>"Postgrad"</span>,</span>
+<span>    <span class='va'>F_EDUCCAT2</span> <span class='op'>==</span> <span class='fl'>99</span> <span class='op'>~</span> <span class='st'>"Refused"</span></span>
+<span>  <span class='op'>)</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>education_level <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/factor.html'>factor</a></span><span class='op'>(</span><span class='va'>education_level</span>, </span>
+<span>                             levels <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Less than HS"</span>, <span class='st'>"HS Grad"</span>, <span class='st'>"Some College"</span>, <span class='st'>"Assoc Degree"</span>, <span class='st'>"College Grad"</span>, <span class='st'>"Postgrad"</span>, <span class='st'>"Refused"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='va'>data</span> <span class='op'>&lt;-</span> <span class='va'>data</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>age_level <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/case-and-replace-when.html'>case_when</a></span><span class='op'>(</span></span>
+<span>    <span class='va'>F_AGECAT</span> <span class='op'>==</span> <span class='fl'>1</span> <span class='op'>~</span> <span class='st'>"18-29"</span>,</span>
+<span>    <span class='va'>F_AGECAT</span> <span class='op'>==</span> <span class='fl'>2</span> <span class='op'>~</span> <span class='st'>"30-49"</span>,</span>
+<span>    <span class='va'>F_AGECAT</span> <span class='op'>==</span> <span class='fl'>3</span> <span class='op'>~</span> <span class='st'>"50-64"</span>,</span>
+<span>    <span class='va'>F_AGECAT</span> <span class='op'>==</span> <span class='fl'>4</span> <span class='op'>~</span> <span class='st'>"65+"</span>,</span>
+<span>    <span class='va'>F_AGECAT</span> <span class='op'>==</span> <span class='fl'>99</span> <span class='op'>~</span> <span class='st'>"Refused"</span></span>
+<span>  <span class='op'>)</span><span class='op'>)</span> </span>
+<span></span>
+<span></span>
+<span></span>
+<span><span class='va'>education</span> <span class='op'>&lt;-</span></span>
+<span>  <span class='va'>data</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>education_level</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarize</a></span><span class='op'>(</span>n <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/context.html'>n</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>prop <span class='op'>=</span> <span class='va'>n</span> <span class='op'>/</span> <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='va'>n</span><span class='op'>)</span><span class='op'>)</span></span>
+<span>  </span>
+<span><span class='fu'>knitr</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/knitr/man/kable.html'>kable</a></span><span class='op'>(</span><span class='va'>education</span>, digits <span class='op'>=</span> <span class='fl'>2</span>, col.names <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Education Level"</span>, <span class='st'>"Number of Respondents"</span>, <span class='st'>"Proportion"</span><span class='op'>)</span><span class='op'>)</span></span></code></pre>
+</div>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Education Level</th>
+<th style="text-align: right;">Number of Respondents</th>
+<th style="text-align: right;">Proportion</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Less than HS</td>
+<td style="text-align: right;">294</td>
+<td style="text-align: right;">0.03</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">HS Grad</td>
+<td style="text-align: right;">1742</td>
+<td style="text-align: right;">0.18</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Some College</td>
+<td style="text-align: right;">1962</td>
+<td style="text-align: right;">0.20</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Assoc Degree</td>
+<td style="text-align: right;">970</td>
+<td style="text-align: right;">0.10</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">College Grad</td>
+<td style="text-align: right;">2572</td>
+<td style="text-align: right;">0.26</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Postgrad</td>
+<td style="text-align: right;">2160</td>
+<td style="text-align: right;">0.22</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Refused</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">0.00</td>
+</tr>
+</tbody>
+</table>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>age</span> <span class='op'>&lt;-</span></span>
+<span>  <span class='va'>data</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>age_level</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarize</a></span><span class='op'>(</span>n <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/context.html'>n</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
+<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>prop <span class='op'>=</span> <span class='va'>n</span> <span class='op'>/</span> <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='va'>n</span><span class='op'>)</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='fu'>knitr</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/knitr/man/kable.html'>kable</a></span><span class='op'>(</span><span class='va'>age</span>, digits <span class='op'>=</span> <span class='fl'>2</span>, col.names <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Age Level"</span>, <span class='st'>"Number of Respondents"</span>, <span class='st'>"Proportion"</span><span class='op'>)</span><span class='op'>)</span></span></code></pre>
+</div>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Age Level</th>
+<th style="text-align: right;">Number of Respondents</th>
+<th style="text-align: right;">Proportion</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">18-29</td>
+<td style="text-align: right;">959</td>
+<td style="text-align: right;">0.10</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">30-49</td>
+<td style="text-align: right;">3128</td>
+<td style="text-align: right;">0.32</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">50-64</td>
+<td style="text-align: right;">2613</td>
+<td style="text-align: right;">0.27</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">65+</td>
+<td style="text-align: right;">2981</td>
+<td style="text-align: right;">0.31</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Refused</td>
+<td style="text-align: right;">39</td>
+<td style="text-align: right;">0.00</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>education_barplot</span> <span class='op'>&lt;-</span> </span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>education</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>education_level</span>, <span class='va'>prop</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> </span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_bar.html'>geom_col</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='st'>"Level of Education"</span>, y <span class='op'>=</span> <span class='st'>"Proportion"</span>, title <span class='op'>=</span> <span class='st'>"Proportion of Varying Levels of Education in Election Polling"</span>, caption <span class='op'>=</span> <span class='st'>"Source: Pew Research Center"</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='va'>education_barplot</span></span></code></pre>
+</div>
+<img src="index_files/figure-html5/unnamed-chunk-3-1.png" alt="" width="624" />
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>age_barplot</span> <span class='op'>&lt;-</span> </span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='va'>age</span>, <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>age_level</span>, <span class='va'>prop</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> </span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_bar.html'>geom_col</a></span><span class='op'>(</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='st'>"Age Level"</span>, y <span class='op'>=</span> <span class='st'>"Proportion"</span>, title <span class='op'>=</span> <span class='st'>"Proportion of Varying Levels of Age in Election Polling"</span>, caption <span class='op'>=</span> <span class='st'>"Source: Pew Research Center"</span><span class='op'>)</span></span>
+<span></span>
+<span><span class='va'>age_barplot</span></span></code></pre>
+</div>
+<p><img src="index_files/figure-html5/unnamed-chunk-3-2.png" alt="" width="624" /></p>
 </div>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
