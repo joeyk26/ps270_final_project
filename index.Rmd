@@ -12,16 +12,15 @@ output:
 ## Project thoughts
 My research question is how do age and education impact a person's participation in election opinion polls? My hypothesis is that older and more educated people participate at a higher rate in election opinion polls than younger and less educated people. I hypothesize this because older and more educated people generally have more time to participate in these and may have more interest. Someone who is older and possibly retired with a higher education level will have more time and knowledge/interest to participate in an election opinion poll. However, a younger people with a lower education level might have less time to participate and less interest. My explanatory variables are age and education and these are measured by a person's age and the highest level of education they have completed. The outcome variable is the rate of participation of different groups of people in election opinion polls. This can be measured by seeing what proportion of people who participate are above or below a certain age or a certain level of education. Something that would support my hypothesis would be seeing groups of people who are older and more educated participating more in these polls than people who are younger and less educated. However, if I see that younger people with less education are participating more than I will see that my hypothesis is false. The data I will be using is from the Pew Research Center.
 
-```{r}
+```{r, echo = FALSE}
 library(tidyverse)
 library(dplyr)
 library(ggplot2)
 data <- read_csv("ATP W153.csv")
-head(data)
 ```
 
 
-```{r}
+```{r, echo = FALSE}
 data <- data |>
   mutate(education_level = case_when(
     F_EDUCCAT2 == 1 ~ "Less than HS",
@@ -66,7 +65,7 @@ knitr::kable(age, digits = 2, col.names = c("Age Level", "Number of Respondents"
 
 
 
-```{r}
+```{r, echo = FALSE}
 education_barplot <- 
   ggplot(education, aes(x = education_level, prop)) + 
   geom_col() +
@@ -81,4 +80,4 @@ age_barplot <-
 
 age_barplot
 ```
-
+Based on these two tables and barplots, it can be seen that people between the ages of 18 and 29 respond to polls significantly less than those who are older than 30. About one third of respondents are older than 65, another third are between 30 and 49, and just over a quarter are between 50 and 64. Younger people between 18 and 29 make up only 10 percent of all responses. This shows that there is a correlation between age and how likely someone is to respond to a poll. A similar trend can be seen in regards to education. College and post graduates together make up just under half of all responses. Another 30 percent has either gone through some level of college or received an associates degree while there is only 21 percent of respondents who have received no college education at all. This is less significant than the data with ages, but it still shows a correlation where people who have continued their education after high school are more likely to respond to a poll just as people who are older than 30 are more likely to respond to a poll.
