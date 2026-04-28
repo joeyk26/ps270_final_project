@@ -9,9 +9,12 @@ output:
 
 
 
-## Project thoughts
-My research question is how do age and education impact a person's participation in election opinion polls? My hypothesis is that older and more educated people participate at a higher rate in election opinion polls than younger and less educated people. I hypothesize this because older and more educated people generally have more time to participate in these and may have more interest. Someone who is older and possibly retired with a higher education level will have more time and knowledge/interest to participate in an election opinion poll. However, a younger people with a lower education level might have less time to participate and less interest. My explanatory variables are age and education and these are measured by a person's age and the highest level of education they have completed. The outcome variable is the rate of participation of different groups of people in election opinion polls. This can be measured by seeing what proportion of people who participate are above or below a certain age or a certain level of education. Something that would support my hypothesis would be seeing groups of people who are older and more educated participating more in these polls than people who are younger and less educated. However, if I see that younger people with less education are participating more than I will see that my hypothesis is false. The data I will be using is from the Pew Research Center.
-
+## Introduction
+  My research question is how does someone's education level impact their support for either Trump or Kamala in the 2024 presidential election? My hypothesis is that those who have a higher education level will tend to support Kamala more than they will support Trump. This can be important because if this poll were to show that the vast majority of people support Kamala over Trump but also the majority of the people who took this poll have a high level of education, the results showing significant support for Kamala might not be as credible.
+  
+## Data
+  The data I will be using is an election opinion poll from Pew Research Center from just prior to the 2024 election gauging support for Trump and Kamala as well as various issues like healthcare, economy, and the Supreme Court. First I will look at the proportion of each education level of the participants in this particular poll as well as the proportion of support for Trump and Kamala indpendent of education level. Then I will sort this between the proportion of support for Kamala and the proportion of support for Trump. 
+  
 ```{r, echo = FALSE}
 library(tidyverse)
 library(dplyr)
@@ -35,31 +38,35 @@ data <- data |>
                              levels = c("Less than HS", "HS Grad", "Some College", "Assoc Degree", "College Grad", "Postgrad", "Refused")))
 
 data <- data |>
-  mutate(age_level = case_when(
-    F_AGECAT == 1 ~ "18-29",
-    F_AGECAT == 2 ~ "30-49",
-    F_AGECAT == 3 ~ "50-64",
-    F_AGECAT == 4 ~ "65+",
-    F_AGECAT == 99 ~ "Refused"
-  )) 
-
+  mutate(candidate_support = case_when(
+    VOTEGEN24_W153 == 1 ~ "Trump",
+    VOTEGEN24_W153 == 2 ~ "Kamala",
+    VOTEGEN24_W153 == 4 ~ "None/Other",
+    VOTEGEN24_W153 == 99 ~ "Refused"
+  )) |>
+  mutate(candidate_support = factor(candidate_support, levels = c("Trump", "Kamala", "None/Other", "Refused")))
 
 
 education <-
-  data |>
+  data |> 
   group_by(education_level) |>
   summarize(n = n()) |>
   mutate(prop = n / sum(n))
   
 knitr::kable(education, digits = 2, col.names = c("Education Level", "Number of Respondents", "Proportion"))
 
-age <-
+candidate  <-
   data |>
-  group_by(age_level) |>
+  filter(candidate_support == c("Kamala", "Trump", "None/Other", "Refused")) |>
+  group_by(candidate_support) |>
   summarize(n = n()) |>
-  mutate(prop = n / sum(n))
+  mutate(prop = n/ sum(n))
 
-knitr::kable(age, digits = 2, col.names = c("Age Level", "Number of Respondents", "Proportion"))
+knitr::kable(candidate, digits = 2, col.names = c("Candidate Support", "Number of Respondents", "Proportion"))
+
+
+
+
 ```
 
 
@@ -73,11 +80,118 @@ education_barplot <-
 
 education_barplot
 
-age_barplot <- 
-  ggplot(age, aes(x = age_level, prop)) + 
+candidate_barplot <- 
+  ggplot(candidate, aes(x = candidate_support, prop)) + 
   geom_col() +
-  labs(x = "Age Level", y = "Proportion", title = "Proportion of Varying Levels of Age in Election Polling", caption = "Source: Pew Research Center")
+  labs(x = "Support for Trump and Kamala", y = "Proportion", title = "Proportion of Support for Trump and Kamala", caption = "Source: Pew Research Center")
 
-age_barplot
+candidate_barplot
+
 ```
-Based on these two tables and barplots, it can be seen that people between the ages of 18 and 29 respond to polls significantly less than those who are older than 30. About one third of respondents are older than 65, another third are between 30 and 49, and just over a quarter are between 50 and 64. Younger people between 18 and 29 make up only 10 percent of all responses. This shows that there is a correlation between age and how likely someone is to respond to a poll. A similar trend can be seen in regards to education. College and post graduates together make up just under half of all responses. Another 30 percent has either gone through some level of college or received an associates degree while there is only 21 percent of respondents who have received no college education at all. This is less significant than the data with ages, but it still shows a correlation where people who have continued their education after high school are more likely to respond to a poll just as people who are older than 30 are more likely to respond to a poll.
+These tables and plots show the overall proportion of each variable independent of each other. Based on these alone, it can be seen that the majority of respondents support Kamala and that there is a significant number who have received some sort of college education. This alone is not enough to prove anything and an analysis of the proportion of each education level and who they support is needed.
+
+# Results
+This table and barplot both show the proportion of support for either Trump or Kamala based on education level, and there seems to be a trend of as people's highest level of education increases, their support for Kamala also increases.
+  
+```{r, echo = FALSE}
+educan_table <- 
+  data |>
+  filter(candidate_support == c("Trump", "Kamala")) |>
+  filter(education_level == c("Less than HS", "HS Grad", "Some College", "Assoc Degree", "College Grad", "Postgrad")) |>
+  group_by(education_level, candidate_support) |>
+  summarize(n = n()) |>
+  mutate(prop = n / sum(n)) |>
+  select(-n)
+
+knitr::kable(educan_table, digits = 2, col.names = c("Education Level", "Candidate Support", "Proportion"))
+
+
+ggplot(educan_table, aes(x = education_level, y = prop, fill = candidate_support)) +
+  geom_col(position = "dodge") +
+  scale_fill_manual(values = c(Kamala = "steelblue1", Trump = "indianred1")) +
+  labs(x = "Level of Education", y = "Proportion", title = "Proportion of Support for Trump and Kamala Based on Education", caption = "Source: Pew Research Center", fill = "Candidates")
+```
+This alone is again not enough to definitively prove the hypothesis as it at most shows a trend but that is not enough to answer the question being asked. For this a regression model is needed, and a linear regression will be the best fit for this.
+
+```{r, echo = FALSE}
+library(modelsummary)
+
+lm_model <-
+  lm(candidate_support ~ education_level, data = data, family = binomial)
+
+
+modelsummary(lm_model, coef_rename = c("education_levelHS Grad" = "HS Grad", "education_levelSome College" = "Some College", "education_levelAssoc Degree" = "Assoc Degree", "education_levelCollege Grad" = "College Grad", "education_levelPostgrad" = "Postgrad", "education_levelRefused" = "Refused"))
+
+```
+This regression output gives further evidence of the relationship between a higher level of education and support for Kamala. In the data, support for Trump is listed as 1 while support for Kamala is listed as 2 so an intercept of 1.601 shows more support for Kamala than for Trump. The coefficients show the percent that lean towards either Trump or Kamala. For example, those with a post graduate education are 16.7% more likely to support Kamala while those with only a high school graduation are 2.8% more likely to support Trump. To prove this hypothesis though, it is necessary to reject the null hypothesis. For this I will be listing anyone with an associates degree or higher as having "Higher Education" and those with only some college or a high school degree or neither as "No Higher Education".
+
+```{r, echo = FALSE}
+library(infer)
+
+data_clean <- data |>
+  mutate(
+    candidate_support = as.character(candidate_support),
+    education_2 = case_when(
+      F_EDUCCAT2 == 1:3 ~ "No Higher Education",
+      F_EDUCCAT2 == 4:6 ~ "Higher Education",
+      F_EDUCCAT2 == 99 ~ "Refused")) |>
+  filter(candidate_support == c("Trump", "Kamala"),
+         education_2 == c("No Higher Education", "Higher Education"))
+
+
+data <-
+  data |>
+  mutate(education_2 = case_when(
+    F_EDUCCAT2 == 1 ~ "No Higher Education",
+    F_EDUCCAT2 == 2 ~ "No Higher Education",
+    F_EDUCCAT2 == 3 ~ "No Higher Education",
+    F_EDUCCAT2 == 4 ~ "Higher Education",
+    F_EDUCCAT2 == 5 ~ "Higher Education",
+    F_EDUCCAT2 == 6 ~ "Higher Education",
+    F_EDUCCAT2 == 99 ~ "Refused"))
+
+edu_diff <-
+  data_clean |>
+  mutate(education_2 = case_when(
+    F_EDUCCAT2 == 1 ~ "No Higher Education",
+    F_EDUCCAT2 == 2 ~ "No Higher Education",
+    F_EDUCCAT2 == 3 ~ "No Higher Education",
+    F_EDUCCAT2 == 4 ~ "Higher Education",
+    F_EDUCCAT2 == 5 ~ "Higher Education",
+    F_EDUCCAT2 == 6 ~ "Higher Education",
+    F_EDUCCAT2 == 99 ~ "Refused")) |>
+  filter(candidate_support %in% c("Trump", "Kamala"), education_2 %in% c("No Higher Education", "Higher Education")) |>
+  specify(candidate_support ~ education_2, success = "Kamala") |>
+  calculate(stat = "diff in props", order = c("Higher Education", "No Higher Education"))
+
+
+null_dist <-
+  data_clean |>
+  mutate(education_2 = case_when(
+    F_EDUCCAT2 == 1 ~ "No Higher Education",
+    F_EDUCCAT2 == 2 ~ "No Higher Education",
+    F_EDUCCAT2 == 3 ~ "No Higher Education",
+    F_EDUCCAT2 == 4 ~ "Higher Education",
+    F_EDUCCAT2 == 5 ~ "Higher Education",
+    F_EDUCCAT2 == 6 ~ "Higher Education",
+    F_EDUCCAT2 == 99 ~ "Refused")) |>
+  filter(candidate_support %in% c("Trump", "Kamala"), education_2 %in% c("No Higher Education", "Higher Education")) |>
+  specify(candidate_support ~ education_2, success = "Kamala") |>
+  hypothesize(null = "independence") |>
+  generate(reps = 1000, type = "permute") |>
+  calculate(stat = "diff in props", order = c("Higher Education", "No Higher Education"))
+
+p_val <-
+  null_dist |>
+  get_p_value(obs_stat = edu_diff, direction = "two-sided")
+
+knitr::kable(p_val, col.names = c("P-Value"))
+
+
+```
+The p-value here is 0 and with an alpha value of 0.05 this shows that the null hypothesis can easily be rejected. The result of the effect of education on preference for either Trump or Kamala is very clear here.
+
+## Conclusion
+Based on this data, it can safely be said that a higher level of education leads to someone having a greater preference for Kamala Harris over Donald Trump. The plot showing the proportions, the linear regression, and the p-value all show that there education has a significant effect. This analysis does not account for confounding factors that could also be influencing support for one candidate or another. Some confounding factors that could be accounted for if there was more information could be geographic location, wealth, and age which could all influence preference for one candidate or another. Had I more time, money, and access to more data such as where the respondents live, certain confounding factors and bias's could be accounted for and ruled out.
+  
+
